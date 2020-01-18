@@ -10,6 +10,7 @@ let topics = [
 ]
 
 function drawGif(element) {
+
     console.log(element);
     var gifDiv = $("<div>").addClass("col-md-4");
     var cardDiv = $("<div>").addClass("card mb-4 shadow-sm");
@@ -26,6 +27,7 @@ function drawGif(element) {
     var editBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary");
 
     cardText.text(element.title);
+    cardText.append($("<p>").text("Rating: " + element.rating.toUpperCase()));
     viewBtn.text("View");
     editBtn.text("Edit");
 
@@ -41,6 +43,10 @@ function drawGif(element) {
 }
 
 function drawButtons(topicList) {
+    // Remove the current buttons
+    $(".gif-btn").remove();
+    
+    // Redraw all of the buttons
     topicList.forEach(function (element, index) {
         let button = $("<a>");
         button.attr("href", "#");
@@ -78,6 +84,12 @@ $(document).on("click", ".gif-btn", function () {
         });
 });
 
+$("#new-phrase-btn").on("click", function(){
+    event.preventDefault();
+    topics.push($("#new-phrase-input").val().trim());
+    $("#new-phrase-input").val("");
+    drawButtons(topics);
+})
 
 
 $(document).ready(function () {
