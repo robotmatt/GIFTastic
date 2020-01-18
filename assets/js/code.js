@@ -23,13 +23,13 @@ function drawGif(element) {
     var cardText = $("<p>").addClass("card-text");
     var btnContainer = $("<div>").addClass("d-flex justify-content-between align-items-center");
     var btnGroup = $("<div>").addClass("btn-group");
-    var viewBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary");
-    var editBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary");
+    var downloadBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary download");
+    
+    downloadBtn.attr("onclick", "window.open('" + element.images.original.url + "')");
 
     cardText.text(element.title);
     cardText.append($("<p>").text("Rating: " + element.rating.toUpperCase()));
-    viewBtn.text("View");
-    editBtn.text("Edit");
+    downloadBtn.text("Download");
 
     gifDiv.append(cardDiv);
     cardDiv.append(img);
@@ -37,8 +37,7 @@ function drawGif(element) {
     cardBody.append(cardText);
     cardBody.append(btnContainer);
     btnContainer.append(btnGroup);
-    btnGroup.append(viewBtn);
-    btnGroup.append(editBtn);
+    btnGroup.append(downloadBtn);
     return gifDiv;
 }
 
@@ -61,6 +60,16 @@ $(document).on("click", ".gif-img", function () {
     } else{
         $(this).attr("src", $(this).attr("data-still"));
     }
+});
+$(document).on("click", ".animate", function () {
+    if($(this).attr("src") === $(this).attr("data-still")){
+        $(this).attr("src", $(this).attr("data-animate"));
+    } else{
+        $(this).attr("src", $(this).attr("data-still"));
+    }
+});
+$(document).on("click", ".pause", function () {
+    $(this).attr("src", $(this).attr("data-still"));
 });
 
 $(document).on("click", ".gif-btn", function () {
@@ -95,6 +104,5 @@ $("#new-phrase-btn").on("click", function(){
 
 
 $(document).ready(function () {
-    //$("#gif-display").append(drawGif);
     drawButtons(topics);
 });
