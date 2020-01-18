@@ -10,9 +10,9 @@ let topics = [
 ]
 
 function drawGif(element) {
-
+    // log the element 
     console.log(element);
-    var gifDiv = $("<div>").addClass("col-md-4");
+    var gifDiv = $("<div>").addClass("col-md-4 gif-div");
     var cardDiv = $("<div>").addClass("card mb-4 shadow-sm");
     var img = $("<img>");
     img.attr("src", element.images.fixed_height_still.url);
@@ -45,7 +45,7 @@ function drawGif(element) {
 function drawButtons(topicList) {
     // Remove the current buttons
     $(".gif-btn").remove();
-    
+
     // Redraw all of the buttons
     topicList.forEach(function (element, index) {
         let button = $("<a>");
@@ -64,6 +64,8 @@ $(document).on("click", ".gif-img", function () {
 });
 
 $(document).on("click", ".gif-btn", function () {
+    // Remove current GIFs
+    $(".gif-div").remove();
 
     // Set up the query url to use the gify API
     var apiKey = "T74dMsmdTp3yeLjLoyQNCm8jN3J2Szu3";
