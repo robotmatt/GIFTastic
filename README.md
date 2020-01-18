@@ -5,3 +5,6 @@ This is Homework #6 for the UT Austin Coding bootcamp. It is a fantastic search 
 ## Usage
 
 Click on a button, and the images will load based on the mood you're feeling. If you want more than the default, feel free to add a mood!
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
