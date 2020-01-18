@@ -9,11 +9,12 @@ let topics = [
     "Dancing"
 ]
 
-function drawGif() {
+function drawGif(element) {
+    console.log(element);
     var gifDiv = $("<div>").addClass("col-md-4");
     var cardDiv = $("<div>").addClass("card mb-4 shadow-sm");
-    //var img = $("<img>");
-    var img = '<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">      <title>Placeholder</title>           <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"       dy=".3em">Thumbnail</text>        </svg>';
+    var img = $("<img>");
+    img.attr("src", element.images.fixed_height.url);
     var cardBody = $("<div>").addClass("card-body");
     var cardText = $("<p>").addClass("card-text");
     var btnContainer = $("<div>").addClass("d-flex justify-content-between align-items-center");
@@ -21,7 +22,7 @@ function drawGif() {
     var viewBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary");
     var editBtn = $("<button>").addClass("btn btn-sm btn-outline-secondary");
 
-    cardText.text("This is a wider card with supporting text below as a natural lead-in to additional content.");
+    cardText.text(element.title);
     viewBtn.text("View");
     editBtn.text("Edit");
 
@@ -36,19 +37,41 @@ function drawGif() {
     return gifDiv;
 }
 
-function drawButtons(topicList){
-    topicList.forEach(function(element, index) {
+function drawButtons(topicList) {
+    topicList.forEach(function (element, index) {
         let button = $("<a>");
         button.attr("href", "#");
-        button.addClass("btn btn-primary m-1").text(element);
+        button.attr("data-index", index);
+        button.addClass("btn btn-primary m-1 gif-btn").text(element);
         $("#buttons-here").append(button);
-        
     });
 }
 
 
+$(document).on("click", ".gif-btn", function () {
+
+    // Set up the query url to use the gify API
+    var apiKey = "T74dMsmdTp3yeLjLoyQNCm8jN3J2Szu3";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&limit=12&offset=0&rating=PG-13&lang=en&q=" + topics[$(this).attr("data-index")];
+    console.log(queryURL);
+    // Sets up the jQuery ajax function to pull from the giphy API
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        // ajax function callback. Do something with the response!
+        .then(function (response) {
+            console.log(response);
+
+            response.data.forEach(function (element, index) {
+                $("#gif-display").append(drawGif(element));
+            });
+        });
+});
+
+
 
 $(document).ready(function () {
-    $("#gif-display").append(drawGif);
+    //$("#gif-display").append(drawGif);
     drawButtons(topics);
 });
