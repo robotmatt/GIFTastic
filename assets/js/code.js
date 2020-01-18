@@ -112,9 +112,15 @@ $(document).on("click", ".gif-btn", function () {
 // Adds a button to the page based on the input
 $("#new-phrase-btn").on("click", function(){
     event.preventDefault();
-    topics.push($("#new-phrase-input").val().trim());
-    $("#new-phrase-input").val("");
-    drawButtons(topics);
+    let value = $("#new-phrase-input").val().trim();
+
+    // if the value isn't null, then push it to the list and redraw the buttons
+    if(value){
+        topics.push(value);
+        $("#new-phrase-input").val("");
+        drawButtons(topics);
+    }
+    
 })
 
 
