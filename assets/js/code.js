@@ -14,7 +14,10 @@ function drawGif(element) {
     var gifDiv = $("<div>").addClass("col-md-4");
     var cardDiv = $("<div>").addClass("card mb-4 shadow-sm");
     var img = $("<img>");
-    img.attr("src", element.images.fixed_height.url);
+    img.attr("src", element.images.fixed_height_still.url);
+    img.addClass("gif-img");
+    img.attr("data-animate", element.images.fixed_height.url);
+    img.attr("data-still", element.images.fixed_height_still.url)
     var cardBody = $("<div>").addClass("card-body");
     var cardText = $("<p>").addClass("card-text");
     var btnContainer = $("<div>").addClass("d-flex justify-content-between align-items-center");
@@ -46,7 +49,13 @@ function drawButtons(topicList) {
         $("#buttons-here").append(button);
     });
 }
-
+$(document).on("click", ".gif-img", function () {
+    if($(this).attr("src") === $(this).attr("data-still")){
+        $(this).attr("src", $(this).attr("data-animate"));
+    } else{
+        $(this).attr("src", $(this).attr("data-still"));
+    }
+});
 
 $(document).on("click", ".gif-btn", function () {
 
